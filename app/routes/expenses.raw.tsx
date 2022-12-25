@@ -1,7 +1,6 @@
-export default function RawExpensesPage() {
-  return (
-    <div>
-      Expenses Raw
-    </div>
-  );
-}
+import type { LoaderArgs } from "@remix-run/node"
+
+export async function loader(data: LoaderArgs) {
+  
+  return {}
+};
