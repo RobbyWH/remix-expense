@@ -25,10 +25,11 @@ export async function action({ params, request }: ActionArgs) {
     }
     console.log(expenseData, expenseId)
     await updateExpense(expenseId, expenseData);
+    return redirect('/expenses')
   } else if (request.method === 'DELETE') {
     await deleteExpense(expenseId);
+    return {deletedId: expenseId}
   }
-  return redirect('/expenses')
 };
 
 export default function UpdateExpensesPage() {

@@ -1,27 +1,32 @@
 import { prisma } from './database.server';
 
-export async function addExpense(expenseData: any) {
+export async function addExpense(expenseData: any, userId: string) {
   try {
     return await prisma.expense.create({
       data: {
         title: expenseData.title,
         amount: +expenseData.amount,
         date: new Date(expenseData.date),
+        User: { connect: {id: userId}}
       },
     });
   } catch (error) {
-    console.log(error);
-    throw error;
+    throw new Error("Failed to add expense")
   }
 }
 
-export async function getExpenses() {
+export async function getExpenses(userId: string) {
+  if(!userId) {
+    throw new Error("Failed to get expenses")
+  }
   try {
-    const expenses = await prisma.expense.findMany({orderBy: {date: 'desc'}});
+    const expenses = await prisma.expense.findMany({
+      where: {userId},
+      orderBy: {date: 'desc'}
+    });
     return expenses;
   } catch (error) {
-    console.log(error);
-    throw error;
+    throw new Error("Failed to get expenses")
   }
 }
 
@@ -31,8 +36,7 @@ export async function getExpense(id: string) {
     const expense = prisma.expense.findFirst({where: {id}});
     return expense;
   } catch (error) {
-    console.log(error);
-    throw error;
+    throw new Error("Failed to get expense")
   }
 }
 
@@ -47,8 +51,7 @@ export async function updateExpense(id: string, expenseData: any) {
       }
     })
   } catch (error) {
-    console.log(error);
-    throw error;
+    throw new Error("Failed to update expense")
   }
 }
 
@@ -58,7 +61,6 @@ export async function deleteExpense(id: string) {
       where: {id}
     })
   } catch (error) {
-    console.log(error);
-    throw error;
+    throw new Error("Failed to delete expense")
   }
 }

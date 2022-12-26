@@ -1,4 +1,4 @@
-import {Form, Link, useActionData, useLoaderData, useMatches, useTransition as useNavigation, useParams} from "@remix-run/react"
+import {Form, Link, useActionData, useMatches, useTransition as useNavigation, useParams} from "@remix-run/react"
 
 function ExpenseForm() {
   const today = new Date().toISOString().slice(0, 10); // yields something like 2023-09-10
@@ -9,6 +9,9 @@ function ExpenseForm() {
   const expenses = matches.find(match => match.id === 'routes/__app/expenses')?.data;
   const expenseData = expenses?.find((expense: any) => expense.id === params.id);
   const navigation = useNavigation();
+  if (params.id && !expenseData){
+    return <p>Invalid expense id</p>;
+  }
 
   const defaultValues = expenseData ? {
     title: expenseData?.title,
