@@ -22,3 +22,9 @@ export const links: LinksFunction = () => {
     { rel: "stylesheet", href: marketingStyles }
   ];
 };
+
+export const headers = () => {
+  return {
+    'Cache-Control': 'max-age=3600' // 60 minutes
+  };
+};

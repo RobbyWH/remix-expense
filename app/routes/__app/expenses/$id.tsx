@@ -45,3 +45,12 @@ export default function UpdateExpensesPage() {
     </Modal>
   )
 }
+
+
+export function meta({params, location, data, parentsData}: any) {
+  const expense = parentsData['routes/__app/expenses'].find((expense: any) => expense.id === params.id)
+  return {
+    title: expense.title,
+    description: "Update Expense"
+  }
+}

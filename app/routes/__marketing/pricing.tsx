@@ -40,3 +40,14 @@ export default function PricingPage() {
 }
 
 export function meta() {}
+
+export const headers = ({actionHeaders, loaderHeaders, parentHeaders}: any) => {
+  return {
+    'Cache-Control': parentHeaders.get('Cache-Control')
+  };
+};
+
+export const handle = {
+  disableJS: true
+}
+
